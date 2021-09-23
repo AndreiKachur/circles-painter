@@ -14,7 +14,9 @@ ___
 ___ 
 ### Сторонние библиотеки:  
   
-- react-icons  
+- React-icons
+- Ant design  
 ___
 Для установки модулей: npm install  
-Для запуска: npm start
+   
+Для запуска: npm start  

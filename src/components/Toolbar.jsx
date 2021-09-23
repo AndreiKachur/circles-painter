@@ -1,10 +1,19 @@
 import React from 'react';
-import '../styles/toolbar.scss'
 import toolState from "../store/toolState";
 import { AiOutlineClear } from 'react-icons/ai'
 import { BsDownload } from 'react-icons/bs'
+import { InputNumber, Select, Radio } from 'antd';
+import '../styles/toolbar.scss'
+import 'antd/dist/antd.css';
 
-const Toolbar = () => {
+const { Option } = Select;
+
+const children = [];
+for (let i = 10; i < 36; i++) {
+    children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+}
+
+const Toolbar = ({ setCanvaSize }) => {
 
     const changeColor = e => {
         toolState.setColor(e.target.value)
@@ -25,8 +34,8 @@ const Toolbar = () => {
         const canvas = toolState.tool.ctx.canvas
         toolState.tool.ctx.clearRect(0, 0, canvas.width, canvas.height)
     }
-    const chooseBrush = (e) => {
-        toolState.setBrush(e.target.value)
+    const chooseBrush = (value) => {
+        toolState.setBrush(value)
     }
     const download = () => {
         const canvas = toolState.tool.ctx.canvas
@@ -46,65 +55,81 @@ const Toolbar = () => {
     ]
 
     return (
-        <div className="toolbar">
-            <div className='toolbar__item'>
-                <label htmlFor="toolbar__brush" className='toolbar__label'>
-                    Кисть:
+        <div className='toolbar__wrapper'>
+            <div className="toolbar">
+
+                <div className='toolbar__item'>
+                    <label htmlFor="line-width" className='toolbar__label'>
+                        Толщина линии:
                 </label>
-                <select
-                    style={{ width: 60 }}
-                    id="toolbar__brush"
-                    type="select" defaultValue='circle'
-                    onClick={chooseBrush}>
-                    <option value='circle'>круг</option>
-                    <option value='square'>квадрат</option>
-                    <option value='paint'>кисть</option>
-                </select>
-            </div>
+                    <InputNumber
+                        defaultValue={2} min={1} max={50}
+                        style={{ width: 60 }}
+                        id="line-width"
+                        onChange={value => toolState.setLineWidth(value)} />
+                </div>
 
-            <div className='toolbar__item'>
-                <label htmlFor="line-width" className='toolbar__label'>
-                    Толщина линии:
+                <div className='toolbar__item'>
+                    <label htmlFor="stroke-color" className='toolbar__label'>
+                        Цвет:
                 </label>
-                <input
-                    onChange={e => toolState.setLineWidth(e.target.value)}
-                    style={{ width: 40 }}
-                    id="line-width"
-                    type="number" defaultValue={2} min={1} max={50} />
-            </div>
+                    <input
+                        onChange={e => changeColor(e)}
+                        id="stroke-color" type="color" defaultValue="#445a72" />
+                </div>
 
-            <div className='toolbar__item'>
-                <label htmlFor="stroke-color" className='toolbar__label'>
-                    Цвет:
+                {checkBoxes.map(item => {
+                    return (
+                        <div key={item[1]} className='toolbar__item'>
+                            <label htmlFor={item[1]} className='toolbar__label'>
+                                {item[0]}
+                            </label>
+                            <input id={item[1]}
+                                defaultChecked={item[3]}
+                                type="checkbox"
+                                onClick={item[2]} />
+                        </div>
+                    )
+                })}
+            </div>
+            <div className="toolbar">
+
+                <div className='toolbar__item'>
+                    <label htmlFor="toolbar__brush" className='toolbar__label'>
+                        Кисть:
                 </label>
-                <input
-                    onChange={e => changeColor(e)}
-                    id="stroke-color" type="color" defaultValue="#445a72" />
-            </div>
+                    <Select defaultValue="circle" style={{ width: 100 }}
+                        onChange={chooseBrush}>
+                        <Option value='circle'>круг</Option>
+                        <Option value='square'>квадрат</Option>
+                        <Option value='paint'>кисть</Option>
+                    </Select>
+                </div>
 
-            {checkBoxes.map(item => {
-                return (
-                    <div key={item[1]} className='toolbar__item'>
-                        <label htmlFor={item[1]} className='toolbar__label'>
-                            {item[0]}
-                        </label>
-                        <input id={item[1]}
-                            defaultChecked={item[3]}
-                            type="checkbox"
-                            onClick={item[2]} />
-                    </div>
-                )
-            })}
+                <div className='toolbar__item'>
+                    <label htmlFor="toolbar__sizes" className='toolbar__label'>
+                        Размер холста:
+                </label>
+                    <Radio.Group
+                        defaultValue='middle'
+                        onChange={e => setCanvaSize(e.target.value)}
+                        id="toolbar__sizes">
+                        <Radio.Button value="small">Small</Radio.Button>
+                        <Radio.Button value="middle">Middle</Radio.Button>
+                        <Radio.Button value="large">Large</Radio.Button>
+                    </Radio.Group>
+                </div>
 
-            <button className='toolbar__btn' onClick={onClean} >
-                <AiOutlineClear className='toolbar__icons' />
+                <button className='toolbar__btn' onClick={onClean} >
+                    <AiOutlineClear className='toolbar__icons' />
                очистить
             </button>
 
-            <button className='toolbar__btn' onClick={download} >
-                <BsDownload className='toolbar__icons' />
+                <button className='toolbar__btn' onClick={download} >
+                    <BsDownload className='toolbar__icons' />
                 скачать
             </button>
+            </div>
         </div>
     );
 };
