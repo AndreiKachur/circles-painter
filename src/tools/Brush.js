@@ -12,6 +12,22 @@ export default class Brush extends Tool {
         xMax: 0,
         yMax: 0,
     }
+    setDefaultState() {
+        const s = this.state
+        s.xMin = s.yMin = s.xMax = s.yMax = 0
+    }
+    drawCircle(x, y, radius, fill) {
+        const ctx = this.ctx
+        ctx.beginPath()
+        ctx.arc(x, y, radius, 0, 2 * Math.PI)
+        fill ? ctx.fill() : ctx.stroke()
+    }
+    drawSquare(x, y, side, fill) {
+        const ctx = this.ctx
+        ctx.translate(-side / 2, -side / 2)
+        fill ? ctx.fillRect(x, y, side, side) : ctx.strokeRect(x, y, side, side)
+        ctx.translate(side / 2, side / 2)
+    }
 
     listen() {
         this.canvas.onmousemove = this.mouseMoveHandler.bind(this)
@@ -28,32 +44,43 @@ export default class Brush extends Tool {
             const s = this.state
             const ctx = this.ctx
 
-            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-            ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height)
-
             const x = (s.xMax - s.xMin) / 2 + s.xMin
             const y = (s.yMax - s.yMin) / 2 + s.yMin
             const radius = Math.max(s.xMax - s.xMin, s.yMax - s.yMin) / 2
 
-            if (toolState.autoClean) {
+            if (toolState.brush !== 'paint') {
+                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+            }
+            ctx.drawImage(img, 0, 0, ctx.canvas.width, ctx.canvas.height)
+
+            if (toolState.brush !== 'paint' && toolState.autoClean) {
                 ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
             }
             if (toolState.center) {
-                ctx.beginPath()
-                ctx.arc(x, y, 3, 0, 2 * Math.PI)
-                ctx.fill()
+                this.drawCircle(x, y, 3, true)
             }
-            if (toolState.fill) {
-                ctx.beginPath()
-                ctx.arc(x, y, radius, 0, 2 * Math.PI)
-                ctx.fill()
+
+            switch (toolState.brush) {
+                case 'circle':
+                    if (toolState.fill) {
+                        this.drawCircle(x, y, radius, true)
+                    }
+                    if (toolState.stroke) {
+                        this.drawCircle(x, y, radius, false)
+                    }
+                    return this.setDefaultState()
+
+                case 'square':
+                    if (toolState.fill) {
+                        this.drawSquare(x, y, radius * 2, true)
+                    }
+                    if (toolState.stroke) {
+                        this.drawSquare(x, y, radius * 2, false)
+                    }
+                    return this.setDefaultState()
+
+                default: return
             }
-            if (toolState.stroke) {
-                ctx.beginPath()
-                ctx.arc(x, y, radius, 0, 2 * Math.PI)
-                ctx.stroke()
-            }
-            s.xMin = s.yMin = s.xMax = s.yMax = 0
         }.bind(this)
 
     }

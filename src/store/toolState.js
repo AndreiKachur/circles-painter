@@ -6,6 +6,7 @@ class ToolState {
     stroke = true
     center = false
     autoClean = false
+    brush = 'circle'
 
     constructor() {
         makeAutoObservable(this)
@@ -24,6 +25,9 @@ class ToolState {
     }
     setAutoClean(autoClean) {
         this.autoClean = autoClean
+    }
+    setBrush(brush) {
+        this.brush = brush
     }
     setColor(color) {
         this.tool.color = color

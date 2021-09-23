@@ -25,6 +25,9 @@ const Toolbar = () => {
         const canvas = toolState.tool.ctx.canvas
         toolState.tool.ctx.clearRect(0, 0, canvas.width, canvas.height)
     }
+    const chooseBrush = (e) => {
+        toolState.setBrush(e.target.value)
+    }
     const download = () => {
         const canvas = toolState.tool.ctx.canvas
         const dataUrl = canvas.toDataURL()
@@ -44,6 +47,21 @@ const Toolbar = () => {
 
     return (
         <div className="toolbar">
+            <div className='toolbar__item'>
+                <label htmlFor="toolbar__brush" className='toolbar__label'>
+                    Кисть:
+                </label>
+                <select
+                    style={{ width: 60 }}
+                    id="toolbar__brush"
+                    type="select" defaultValue='circle'
+                    onClick={chooseBrush}>
+                    <option value='circle'>круг</option>
+                    <option value='square'>квадрат</option>
+                    <option value='paint'>кисть</option>
+                </select>
+            </div>
+
             <div className='toolbar__item'>
                 <label htmlFor="line-width" className='toolbar__label'>
                     Толщина линии:
