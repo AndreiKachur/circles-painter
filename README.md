@@ -1,7 +1,8 @@
     
-### Приложение для рисования и выравнивания окружностей.    
-### Деплой приложения можно посмотреть по ссылке: https://circles-painter.vercel.app/  
-
+Приложение для рисования и выравнивания окружностей.    
+Деплой приложения можно посмотреть по ссылке: https://circles-painter.vercel.app/   
+    
+[![Demo-preview](https://github.com/AndreiKachur/circles-painter/blob/master/public/assets/demo.gif)](https://circles-painter.vercel.app/)
         
 ### Технологии:  
 ___
@@ -15,5 +16,5 @@ ___
   
 - react-icons  
 ___
-### Для установки модулей: npm install  
-### Для запуска: npm start
+Для установки модулей: npm install  
+Для запуска: npm start
