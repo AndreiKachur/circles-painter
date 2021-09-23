@@ -29,7 +29,7 @@ export default class Brush extends Tool {
             const ctx = this.ctx
 
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-            this.ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height)
+            ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height)
 
             const x = (s.xMax - s.xMin) / 2 + s.xMin
             const y = (s.yMax - s.yMin) / 2 + s.yMin

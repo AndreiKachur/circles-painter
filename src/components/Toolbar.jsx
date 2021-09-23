@@ -47,21 +47,21 @@ const Toolbar = () => {
             <div className='toolbar__item'>
                 <label htmlFor="line-width" className='toolbar__label'>
                     Толщина линии:
-            </label>
+                </label>
                 <input
                     onChange={e => toolState.setLineWidth(e.target.value)}
                     style={{ width: 40 }}
                     id="line-width"
-                    type="number" defaultValue={5} min={1} max={50} />
+                    type="number" defaultValue={2} min={1} max={50} />
             </div>
 
             <div className='toolbar__item'>
                 <label htmlFor="stroke-color" className='toolbar__label'>
                     Цвет:
-            </label>
+                </label>
                 <input
                     onChange={e => changeColor(e)}
-                    id="stroke-color" type="color" defaultValue="#8CA1A5" />
+                    id="stroke-color" type="color" defaultValue="#445a72" />
             </div>
 
             {checkBoxes.map(item => {

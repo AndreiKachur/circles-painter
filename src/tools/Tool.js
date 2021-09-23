@@ -5,6 +5,7 @@ export default class Tool {
         this.ctx = canvas.getContext('2d')
         this.ctx.strokeStyle = 'rgb(68, 90, 114)'
         this.ctx.fillStyle = 'rgb(68, 90, 114)'
+        this.ctx.lineWidth = 2
     }
 
     set color(color) {
