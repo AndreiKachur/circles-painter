@@ -56,12 +56,12 @@ const Toolbar = ({ setCanvaSize }) => {
 
     return (
         <div className='toolbar__wrapper'>
-            <div className="toolbar">
 
+            <div className="toolbar">
                 <div className='toolbar__item'>
                     <label htmlFor="line-width" className='toolbar__label'>
                         Толщина линии:
-                </label>
+                    </label>
                     <InputNumber
                         defaultValue={2} min={1} max={50}
                         style={{ width: 60 }}
@@ -72,7 +72,7 @@ const Toolbar = ({ setCanvaSize }) => {
                 <div className='toolbar__item'>
                     <label htmlFor="stroke-color" className='toolbar__label'>
                         Цвет:
-                </label>
+                    </label>
                     <input
                         onChange={e => changeColor(e)}
                         id="stroke-color" type="color" defaultValue="#445a72" />
@@ -92,12 +92,12 @@ const Toolbar = ({ setCanvaSize }) => {
                     )
                 })}
             </div>
-            <div className="toolbar">
 
+            <div className="toolbar">
                 <div className='toolbar__item'>
                     <label htmlFor="toolbar__brush" className='toolbar__label'>
                         Кисть:
-                </label>
+                    </label>
                     <Select defaultValue="circle" style={{ width: 100 }}
                         onChange={chooseBrush}>
                         <Option value='circle'>круг</Option>
@@ -109,7 +109,7 @@ const Toolbar = ({ setCanvaSize }) => {
                 <div className='toolbar__item'>
                     <label htmlFor="toolbar__sizes" className='toolbar__label'>
                         Размер холста:
-                </label>
+                    </label>
                     <Radio.Group
                         defaultValue='middle'
                         onChange={e => setCanvaSize(e.target.value)}
@@ -122,13 +122,13 @@ const Toolbar = ({ setCanvaSize }) => {
 
                 <button className='toolbar__btn' onClick={onClean} >
                     <AiOutlineClear className='toolbar__icons' />
-               очистить
-            </button>
+                    очистить
+                </button>
 
                 <button className='toolbar__btn' onClick={download} >
                     <BsDownload className='toolbar__icons' />
-                скачать
-            </button>
+                    скачать
+                </button>
             </div>
         </div>
     );
