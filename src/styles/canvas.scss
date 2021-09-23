@@ -1,0 +1,18 @@
+@import "./variables";
+
+
+.canvas {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+  @media(max-width:1100px){
+    padding-top: 90px;
+  }
+}
+
+canvas {
+  background-color: #f5f5f5;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.589);
+}
