@@ -11,6 +11,8 @@ export default class Brush extends Tool {
         yMin: 0,
         xMax: 0,
         yMax: 0,
+        diffX: 0,
+        diffY: 0
     }
     setDefaultState() {
         const s = this.state
@@ -78,6 +80,8 @@ export default class Brush extends Tool {
                         this.drawSquare(x, y, radius * 2, false)
                     }
                     return this.setDefaultState()
+                case 'paint':
+                    return this.draw(s.diffX, s.diffY)
 
                 default: return
             }
@@ -88,30 +92,31 @@ export default class Brush extends Tool {
         let canvasData = this.canvas.toDataURL()
         const s = this.state
 
-        const diffX = e.pageX - e.target.offsetLeft
-        const diffY = e.pageY - e.target.offsetTop
+        s.diffX = e.pageX - e.target.offsetLeft
+        s.diffY = e.pageY - e.target.offsetTop
 
         if (!this.mouseDown) {
-            s.xMin = s.xMax = diffX
-            s.yMin = s.yMax = diffY
+            s.xMin = s.xMax = s.diffX
+            s.yMin = s.yMax = s.diffY
         }
         this.mouseDown = true
         this.ctx.beginPath()
         this.saved = canvasData
-        this.ctx.moveTo(diffX, diffY)
+        this.ctx.moveTo(s.diffX, s.diffY)
     }
     mouseMoveHandler(e) {
-        const diffX = e.pageX - e.target.offsetLeft
-        const diffY = e.pageY - e.target.offsetTop
+        const s = this.state
+        s.diffX = e.pageX - e.target.offsetLeft
+        s.diffY = e.pageY - e.target.offsetTop
 
         if (this.mouseDown) {
             const s = this.state
-            this.draw(diffX, diffY)
+            this.draw(s.diffX, s.diffY)
 
-            if (diffX > s.xMax) s.xMax = diffX
-            if (diffY > s.yMax) s.yMax = diffY
-            if (diffX < s.xMin) s.xMin = diffX
-            if (diffY < s.yMin) s.yMin = diffY
+            if (s.diffX > s.xMax) s.xMax = s.diffX
+            if (s.diffY > s.yMax) s.yMax = s.diffY
+            if (s.diffX < s.xMin) s.xMin = s.diffX
+            if (s.diffY < s.yMin) s.yMin = s.diffY
         }
     }
     draw(x, y) {
