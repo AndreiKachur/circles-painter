@@ -1,5 +1,6 @@
 import React from 'react';
 import toolState from "../store/toolState";
+import canvasState from "../store/canvasState";
 import { AiOutlineClear } from 'react-icons/ai'
 import { BsDownload } from 'react-icons/bs'
 import { InputNumber, Select, Radio } from 'antd';
@@ -13,7 +14,7 @@ for (let i = 10; i < 36; i++) {
     children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
 }
 
-const Toolbar = ({ setCanvaSize }) => {
+const Toolbar = () => {
 
     const changeColor = e => {
         toolState.setColor(e.target.value)
@@ -34,8 +35,11 @@ const Toolbar = ({ setCanvaSize }) => {
         const canvas = toolState.tool.ctx.canvas
         toolState.tool.ctx.clearRect(0, 0, canvas.width, canvas.height)
     }
-    const chooseBrush = (value) => {
+    const chooseBrush = value => {
         toolState.setBrush(value)
+    }
+    const setCanvaSize = size => {
+        canvasState.setCanvaSize(size)
     }
     const download = () => {
         const canvas = toolState.tool.ctx.canvas
