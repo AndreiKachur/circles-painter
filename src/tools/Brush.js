@@ -18,6 +18,11 @@ export default class Brush extends Tool {
         const s = this.state
         s.xMin = s.yMin = s.xMax = s.yMax = 0
     }
+    setDiffXY(e) {
+        const s = this.state
+        s.diffX = e.pageX - e.target.offsetLeft
+        s.diffY = e.pageY - e.target.offsetTop
+    }
     drawCircle(x, y, radius, fill) {
         const ctx = this.ctx
         ctx.beginPath()
@@ -29,6 +34,10 @@ export default class Brush extends Tool {
         ctx.translate(-side / 2, -side / 2)
         fill ? ctx.fillRect(x, y, side, side) : ctx.strokeRect(x, y, side, side)
         ctx.translate(side / 2, side / 2)
+    }
+    draw(x, y) {
+        this.ctx.lineTo(x, y)
+        this.ctx.stroke()
     }
 
     listen() {
@@ -86,14 +95,12 @@ export default class Brush extends Tool {
                 default: return
             }
         }.bind(this)
-
     }
     mouseDownHandler(e) {
         let canvasData = this.canvas.toDataURL()
         const s = this.state
 
-        s.diffX = e.pageX - e.target.offsetLeft
-        s.diffY = e.pageY - e.target.offsetTop
+        this.setDiffXY(e)
 
         if (!this.mouseDown) {
             s.xMin = s.xMax = s.diffX
@@ -105,12 +112,9 @@ export default class Brush extends Tool {
         this.ctx.moveTo(s.diffX, s.diffY)
     }
     mouseMoveHandler(e) {
-        const s = this.state
-        s.diffX = e.pageX - e.target.offsetLeft
-        s.diffY = e.pageY - e.target.offsetTop
-
         if (this.mouseDown) {
             const s = this.state
+            this.setDiffXY(e)
             this.draw(s.diffX, s.diffY)
 
             if (s.diffX > s.xMax) s.xMax = s.diffX
@@ -118,9 +122,5 @@ export default class Brush extends Tool {
             if (s.diffX < s.xMin) s.xMin = s.diffX
             if (s.diffY < s.yMin) s.yMin = s.diffY
         }
-    }
-    draw(x, y) {
-        this.ctx.lineTo(x, y)
-        this.ctx.stroke()
     }
 }
