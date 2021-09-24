@@ -10,8 +10,7 @@ const Canvas = observer(() => {
 
     useEffect(() => {
         toolState.setTool(new Brush(canvasRef.current))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [canvasState.width])
+    }, [canvasState.width]) // eslint-disable-line
 
     return (
         <div className="canvas">
