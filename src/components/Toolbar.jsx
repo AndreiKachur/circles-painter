@@ -16,9 +16,6 @@ for (let i = 10; i < 36; i++) {
 
 const Toolbar = () => {
 
-    const changeColor = e => {
-        toolState.setColor(e.target.value)
-    }
     const onClean = () => {
         const canvas = toolState.tool.ctx.canvas
         toolState.tool.ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -66,7 +63,7 @@ const Toolbar = () => {
                         Цвет:
                     </label>
                     <input
-                        onChange={e => changeColor(e)}
+                        onChange={e => toolState.setToolParam(e)}
                         id="stroke-color" type="color" defaultValue="#445a72" />
                 </div>
 
@@ -79,7 +76,7 @@ const Toolbar = () => {
                             <input id={item[1]}
                                 defaultChecked={item[2]}
                                 type="checkbox"
-                                onClick={e => toolState.setChecked(e)} />
+                                onClick={e => toolState.setToolParam(e)} />
                         </div>
                     )
                 })}
@@ -87,10 +84,11 @@ const Toolbar = () => {
 
             <div className="toolbar">
                 <div className='toolbar__item'>
-                    <label htmlFor="toolbar__brush" className='toolbar__label'>
+                    <label htmlFor="toolbar-brush" className='toolbar__label'>
                         Кисть:
                     </label>
                     <Select defaultValue="circle" style={{ width: 100 }}
+                        id='toolbar-brush'
                         onChange={chooseBrush}>
                         <Option value='circle'>круг</Option>
                         <Option value='square'>квадрат</Option>
