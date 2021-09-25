@@ -8,7 +8,7 @@ class CanvasState {
         makeAutoObservable(this)
     }
 
-    setCanvaSize(size) {
+    setCanvasSize(size) {
         switch (size) {
             case 'small':
                 this.width = 600

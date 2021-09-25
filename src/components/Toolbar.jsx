@@ -19,18 +19,6 @@ const Toolbar = () => {
     const changeColor = e => {
         toolState.setColor(e.target.value)
     }
-    const onFill = e => {
-        toolState.setFill(e.target.checked)
-    }
-    const onStroke = e => {
-        toolState.setStroke(e.target.checked)
-    }
-    const onCenter = e => {
-        toolState.setCenter(e.target.checked)
-    }
-    const onAutoClean = e => {
-        toolState.setAutoClean(e.target.checked)
-    }
     const onClean = () => {
         const canvas = toolState.tool.ctx.canvas
         toolState.tool.ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -38,8 +26,8 @@ const Toolbar = () => {
     const chooseBrush = value => {
         toolState.setBrush(value)
     }
-    const setCanvaSize = size => {
-        canvasState.setCanvaSize(size)
+    const setCanvasSize = size => {
+        canvasState.setCanvasSize(size)
     }
     const download = () => {
         const canvas = toolState.tool.ctx.canvas
@@ -52,10 +40,10 @@ const Toolbar = () => {
         document.body.removeChild(a)
     }
     const checkBoxes = [
-        ['Заливка', 'fill', onFill, false],
-        ['Обводка', 'stroke', onStroke, true],
-        ['Показать центр', 'center', onCenter, false],
-        ['Авто очистка', 'auto-clean', onAutoClean, false]
+        ['Заливка', 'fill', false],
+        ['Обводка', 'stroke', true],
+        ['Показать центр', 'center', false],
+        ['Авто очистка', 'auto-clean', false]
     ]
 
     return (
@@ -89,9 +77,9 @@ const Toolbar = () => {
                                 {item[0]}
                             </label>
                             <input id={item[1]}
-                                defaultChecked={item[3]}
+                                defaultChecked={item[2]}
                                 type="checkbox"
-                                onClick={item[2]} />
+                                onClick={e => toolState.setChecked(e)} />
                         </div>
                     )
                 })}
@@ -116,7 +104,7 @@ const Toolbar = () => {
                     </label>
                     <Radio.Group
                         defaultValue='middle'
-                        onChange={e => setCanvaSize(e.target.value)}
+                        onChange={e => setCanvasSize(e.target.value)}
                         id="toolbar__sizes">
                         <Radio.Button value="small">Small</Radio.Button>
                         <Radio.Button value="middle">Middle</Radio.Button>

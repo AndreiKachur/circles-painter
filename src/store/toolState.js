@@ -14,17 +14,15 @@ class ToolState {
     setTool(tool) {
         this.tool = tool
     }
-    setFill(fill) {
-        this.fill = fill
-    }
-    setStroke(stroke) {
-        this.stroke = stroke
-    }
-    setCenter(center) {
-        this.center = center
-    }
-    setAutoClean(autoClean) {
-        this.autoClean = autoClean
+    setChecked(e) {
+        const checked = e.target.checked
+        switch (e.target.id) {
+            case 'fill': return this.fill = checked
+            case 'stroke': return this.stroke = checked
+            case 'center': return this.center = checked
+            case 'auto-clean': return this.autoClean = checked
+            default: return
+        }
     }
     setBrush(brush) {
         this.brush = brush

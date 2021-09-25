@@ -89,6 +89,7 @@ export default class Brush extends Tool {
                         this.drawSquare(x, y, radius * 2, false)
                     }
                     return this.setDefaultState()
+
                 case 'paint':
                     return this.draw(s.diffX, s.diffY)
 
